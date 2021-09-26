@@ -1,45 +1,53 @@
 <template>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th width="20%">Name</th>
-        <th width="20%">Email | Phone</th>
-        <th width="20%">Main Contact</th>
-        <th width="10%">Accounts</th>
-        <th width="10%">Lifetime Spend</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="customer in customers" v-bind:key="customer.name" >
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email}} <br> {{ customer.phone_number}}</td>
-        <td>{{ customer.principal_contact_name? customer.principal_contact_name : 'N/A'   }}</td>
-        <td>{{ customer.total_accounts}}</td>
-        <td>{{ customer.lifetime_usd_spend}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="card-body">
+    Customers
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th width="20%">Name</th>
+          <th width="25%">Address</th>
+          <th width="15%">Contacts</th>
+          <th width="10%" class="text-center">Number of accounts</th>
+          <th width="10%">Lifetime Spend</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr 
+            v-for="customer in customers" 
+            v-bind:key="customer.name" 
+            @click="$router.push({ path: `customers/${customer.id}`})"
+            style="cursor:pointer"
+          >
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.address }}</td>
+            <td>
+              {{ customer.email }} <br />
+              {{ customer.phone_number }} <br>
+              {{ customer.principal_contact_name }} 
+            </td>
+            <td class="text-center">{{ customer.total_accounts }}</td>
+            <td>{{ customer.lifetime_usd_spend }}</td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      loading: true,
-      customers: []
-    }
+      customers: [],
+    };
   },
   mounted() {
     axios
-      .get('customers')
+      .get("api/customers")
       .then((response) => {
-        console.log('RES', response.data)
         this.customers = response.data.data;
-        this.loading = false; 
       })
       .catch((error) => {
-        this.loading = false;
-        console.log("Unable to fetch customers.");
+        console.log("Unable to fetch data.");
       });
   },
 };

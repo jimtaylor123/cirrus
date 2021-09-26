@@ -2,84 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MonthlyUsage;
+use App\Models\Account;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Account\AccountCollection;
+use App\Http\Resources\MonthlyUsage\MonthlyUsageCollection;
 
 class MonthlyUsageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request, Account $account)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\MonthlyUsage  $monthlyUsage
-     * @return \Illuminate\Http\Response
-     */
-    public function show(MonthlyUsage $monthlyUsage)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\MonthlyUsage  $monthlyUsage
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(MonthlyUsage $monthlyUsage)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MonthlyUsage  $monthlyUsage
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, MonthlyUsage $monthlyUsage)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\MonthlyUsage  $monthlyUsage
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(MonthlyUsage $monthlyUsage)
-    {
-        //
+        return MonthlyUsageCollection::make($account->monthlyUsages)->additional([
+            'customer' => $account->customer,
+            'account' => $account,
+            'message' => trans('messages.monthlyUsages.index'),
+        ]);
     }
 }
