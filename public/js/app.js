@@ -2214,8 +2214,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      customers: []
+      customers: [],
+      isMobile: true
     };
+  },
+  created: function created() {
+    window.addEventListener("resize", this.checkIfMobile);
+  },
+  destroyed: function destroyed() {
+    window.removeEventListener("resize", this.checkIfMobile);
+  },
+  methods: {
+    checkIfMobile: function checkIfMobile() {
+      this.isMobile = window.innerWidth < 770;
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -59659,7 +59671,35 @@ var render = function() {
   return _c("div", { staticClass: "card-body" }, [
     _vm._v("\n  Customers\n  "),
     _c("table", { staticClass: "table table-striped" }, [
-      _vm._m(0),
+      _c("thead", [
+        _c("tr", [
+          _c("th", { attrs: { width: "20%" } }, [_vm._v("Name")]),
+          _vm._v(" "),
+          _c(
+            "th",
+            { class: { "d-none": _vm.isMobile }, attrs: { width: "25%" } },
+            [_vm._v("Address")]
+          ),
+          _vm._v(" "),
+          _c("th", { attrs: { width: "15%" } }, [_vm._v("Contacts")]),
+          _vm._v(" "),
+          _c(
+            "th",
+            {
+              staticClass: "text-center",
+              class: { "d-none": _vm.isMobile },
+              attrs: { width: "10%" }
+            },
+            [_vm._v("Number of accounts")]
+          ),
+          _vm._v(" "),
+          _c(
+            "th",
+            { class: { "d-none": _vm.isMobile }, attrs: { width: "10%" } },
+            [_vm._v("Lifetime Spend")]
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "tbody",
@@ -59678,7 +59718,9 @@ var render = function() {
             [
               _c("td", [_vm._v(_vm._s(customer.name))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(customer.address))]),
+              _c("td", { class: { "d-none": _vm.isMobile } }, [
+                _vm._v(_vm._s(customer.address))
+              ]),
               _vm._v(" "),
               _c("td", [
                 _vm._v("\n            " + _vm._s(customer.email) + " "),
@@ -59692,11 +59734,18 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("td", { staticClass: "text-center" }, [
-                _vm._v(_vm._s(customer.total_accounts))
-              ]),
+              _c(
+                "td",
+                {
+                  staticClass: "text-center",
+                  class: { "d-none": _vm.isMobile }
+                },
+                [_vm._v(_vm._s(customer.total_accounts))]
+              ),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(customer.lifetime_usd_spend))])
+              _c("td", { class: { "d-none": _vm.isMobile } }, [
+                _vm._v(_vm._s(customer.lifetime_usd_spend))
+              ])
             ]
           )
         }),
@@ -59705,28 +59754,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { width: "20%" } }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "25%" } }, [_vm._v("Address")]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "15%" } }, [_vm._v("Contacts")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-center", attrs: { width: "10%" } }, [
-          _vm._v("Number of accounts")
-        ]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "10%" } }, [_vm._v("Lifetime Spend")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -59763,35 +59791,29 @@ var render = function() {
         [_vm._v(_vm._s(_vm.customer.name))]
       ),
       _vm._v(" > Usage History\n  "),
-      _c(
-        "table",
-        { staticClass: "table table-striped", staticStyle: { width: "40%" } },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.monthlyUsages, function(monthlyUsage) {
-              return _c("tr", { key: monthlyUsage.id }, [
-                _c("td", [
-                  _vm._v(
-                    _vm._s(
-                      _vm.$moment(monthlyUsage.month, "MM").format("MMMM")
-                    ) +
-                      " " +
-                      _vm._s(monthlyUsage.year)
-                  )
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-right" }, [
-                  _vm._v("$" + _vm._s(monthlyUsage.cents / 100))
-                ])
+      _c("table", { staticClass: "table table-striped" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.monthlyUsages, function(monthlyUsage) {
+            return _c("tr", { key: monthlyUsage.id }, [
+              _c("td", [
+                _vm._v(
+                  _vm._s(_vm.$moment(monthlyUsage.month, "MM").format("MMMM")) +
+                    " " +
+                    _vm._s(monthlyUsage.year)
+                )
+              ]),
+              _vm._v(" "),
+              _c("td", { staticClass: "text-right" }, [
+                _vm._v("$" + _vm._s(monthlyUsage.cents / 100))
               ])
-            }),
-            0
-          )
-        ]
-      )
+            ])
+          }),
+          0
+        )
+      ])
     ],
     1
   )
@@ -59803,11 +59825,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { attrs: { width: "20%" } }, [_vm._v("Month")]),
+        _c("th", [_vm._v("Month")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-right", attrs: { width: "20%" } }, [
-          _vm._v("Value (USD)")
-        ])
+        _c("th", { staticClass: "text-right" }, [_vm._v("Value (USD)")])
       ])
     ])
   }

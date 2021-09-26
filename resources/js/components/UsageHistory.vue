@@ -2,11 +2,11 @@
   <div class="card-body">
      <router-link :to="{path: '/customers/'}">Customers</router-link> > 
     <router-link :to="{path: '/customers/' + customer.id}">{{customer.name}}</router-link> > Usage History
-    <table class="table table-striped" style="width:40%">
+    <table class="table table-striped">
       <thead>
         <tr>
-          <th width="20%">Month</th>
-          <th width="20%" class="text-right">Value (USD)</th>
+          <th >Month</th>
+          <th class="text-right">Value (USD)</th>
         </tr>
       </thead>
       <tbody>
