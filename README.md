@@ -16,6 +16,7 @@ Suggested improvements, if more time were available:
 5. Write a few php unit integration tests to ensure the api endpoints return what we expect.
 6. Implement our "API" endpoints according to the JSON api spec
 7. Switch from boostrap to vuetify for front end component library
+8. Put a spinner in the vue tables so that the delay waiting for API call to resolve doesn't result in a blank table
 
 # Set up
 
